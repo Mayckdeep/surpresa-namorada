@@ -3,17 +3,177 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Surpresa para Minha Amor</title>
+  <title>Surpresa para Anninha</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Georgia&family=Roboto:wght@400&display=swap" rel="stylesheet">
   <style>
     body {
-      overflow: hidden; /* Para evitar scroll quando botões se movem */
+      background: linear-gradient(135deg, #fff0f5, #f3e8ff);
+      font-family: 'Georgia', serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+    #tulips {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .tulip {
+      position: absolute;
+      font-size: 24px;
+      color: #ffccd5;
+      animation: fall 10s linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-100vh) rotate(0deg); opacity: 0.8; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    #notes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .note {
+      position: absolute;
+      font-size: 16px;
+      color: #ffccd5;
+      animation: floatNote 5s linear infinite;
+      opacity: 0;
+    }
+    @keyframes floatNote {
+      0% { transform: translateY(0); opacity: 0.8; }
+      50% { transform: translateY(-20px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0; }
+    }
+    .main-heart {
+      font-size: 80px;
+      color: #ffccd5;
+      animation: pulse 2s ease-in-out infinite;
+      transition: transform 0.3s ease, text-shadow 0.3s ease;
+    }
+    .main-heart:hover {
+      transform: scale(1.2);
+      text-shadow: 0 0 20px #ffb3c6;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .castle {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 50px;
+      color: #4b0082;
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+    .typewriter {
+      overflow: hidden;
+      border-right: 0.15em solid #ffccd5;
+      white-space: nowrap;
+      animation: typing 6s steps(45, end) forwards, blink-caret 0.75s step-end infinite;
+      max-width: 100%;
+      width: fit-content;
+      display: inline-block;
+      overflow-wrap: anywhere;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: #ffccd5; }
+    }
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    .button-glow {
+      background: linear-gradient(135deg, #ffccd5, #ffb3c6);
+      box-shadow: 0 0 20px rgba(255, 179, 198, 0.6);
+      transition: all 0.3s ease;
+      animation: buttonPulse 2s ease-in-out infinite;
+    }
+    .button-glow:hover {
+      box-shadow: 0 0 40px rgba(255, 179, 198, 0.9);
+      transform: scale(1.1);
+    }
+    @keyframes buttonPulse {
+      0% { box-shadow: 0 0 20px rgba(255, 179, 198, 0.6); }
+      50% { box-shadow: 0 0 30px rgba(255, 179, 198, 0.8); }
+      100% { box-shadow: 0 0 20px rgba(255, 179, 198, 0.6); }
+    }
+    .tab {
+      cursor: pointer;
+      padding: 12px 24px;
+      background: rgba(255, 204, 213, 0.8);
+      color: #4b0082;
+      border-radius: 12px 12px 0 0;
+      transition: all 0.3s;
+      font-family: 'Roboto', sans-serif;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .tab.active {
+      background: #ffb3c6;
+      color: white;
+    }
+    .tab-content {
+      display: none;
+      padding: 30px;
+      background: rgba(255, 240, 245, 0.95);
+      border-radius: 0 12px 12px 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideIn 1s forwards;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    @keyframes slideIn {
+      to { opacity: 1; transform: translateY(0); }
     }
     .photo-card {
-      transition: transform 0.3s ease-in-out;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: rgba(255, 240, 245, 0.95);
+      border: 3px solid #ffccd5;
+      border-radius: 12px;
     }
     .photo-card:hover {
       transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(255, 179, 198, 0.5);
+    }
+    .photo-card p {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      background: rgba(255, 240, 245, 0.9);
+      padding: 8px;
+      font-family: 'Roboto', sans-serif;
+    }
+    .photo-card:hover p {
+      opacity: 1;
     }
     .hidden-message {
       display: none;
@@ -25,126 +185,885 @@
       opacity: 1;
     }
     #noButton {
-      position: relative; /* Mudará para absolute quando fugir */
+      position: relative;
       transition: all 0.2s ease-in-out;
     }
-    #hearts {
+    .quiz-option {
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      background: rgba(255, 240, 245, 0.95);
+      border: 1px solid #ffccd5;
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .quiz-option:hover {
+      background-color: #ffe6f0;
+      transform: scale(1.05);
+    }
+    .roulette {
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: conic-gradient(#ffccd5 0% 20%, #ffb3c6 20% 40%, #ffccd5 40% 60%, #ffb3c6 60% 80%, #ffccd5 80% 100%);
+      animation: spin 2s linear infinite;
+      box-shadow: 0 0 20px rgba(255, 179, 198, 0.5);
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .roulette.stop {
+      animation: none;
+    }
+    .roulette-arrow {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-bottom: 24px solid #fff0f5;
+    }
+    .fireworks {
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: -1;
+      z-index: 10;
     }
-    .heart {
+    .firework {
       position: absolute;
-      font-size: 24px;
-      color: red;
-      animation: float 5s linear infinite;
+      width: 8px;
+      height: 8px;
+      background: #ffccd5;
+      border-radius: 50%;
+      animation: explode 1.2s ease-out forwards;
     }
-    @keyframes float {
-      0% { transform: translateY(100vh); opacity: 1; }
-      100% { transform: translateY(-100vh); opacity: 0; }
+    @keyframes explode {
+      0% { transform: scale(0); opacity: 1; }
+      100% { transform: scale(6); opacity: 0; }
+    }
+    .piano-key {
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .piano-key:hover {
+      transform: scale(1.1);
+      background: #ffe6f0;
+    }
+    #letterContent.show {
+      display: block;
+      opacity: 1;
+      animation: openLetter 2s ease-in-out forwards;
+    }
+    @keyframes openLetter {
+      0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    #landingSection {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    #landingSection.hidden {
+      opacity: 0;
+      transform: translateY(-50px);
+      display: none;
+    }
+    #mainSection {
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    #mainSection.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #timeline .mb-8:nth-child(odd)::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      background: #ffccd5;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    #timeline .mb-8:nth-child(even)::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      background: #ffb3c6;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    @media (max-width: 640px) {
+      .text-5xl { font-size: 2.5rem; }
+      .text-3xl { font-size: 1.75rem; }
+      .main-heart { font-size: 60px; }
+      .castle { font-size: 40px; }
+      .typewriter { font-size: 1.125rem; max-width: 90%; }
+      .roulette { width: 200px; height: 200px; }
+      .photo-card img, .photo-card video { height: 160px; }
+      .tab { padding: 8px 16px; font-size: 0.875rem; }
+      .button-glow { padding: 0.75rem 1.5rem; font-size: 0.875rem; }
+      .piano-key { padding: 0.5rem; font-size: 0.875rem; }
+      #timeline img, #timeline video { width: 80px; height: 80px; }
     }
   </style>
 </head>
-<body class="bg-pink-100 flex flex-col items-center justify-center min-h-screen p-4 relative">
-  <div id="hearts"></div> <!-- Corações flutuantes -->
+<body class="flex flex-col items-center min-h-screen p-6">
+  <audio id="backgroundMusic" loop>
+    <source src="https://www.dropbox.com/scl/fi/b6hj9m7j3cqvx6dp9hm4c/Joe-Hisaishi-Merry-Go-Round-of-Life-from-Howl-s-Moving-Castle-f7SS57LFPco-1.mp3?rlkey=rwhp09li908ekrr50nc418tbv&st=07l3dmmj&dl=1" type="audio/mpeg">
+    Seu navegador não suporta o elemento de áudio.
+  </audio>
+  <div class="fixed bottom-4 right-4 z-20">
+    <button id="musicToggle" class="button-glow text-white px-4 py-2 rounded-full">Pausar Música</button>
+  </div>
+  <div id="tulips"></div>
+  <div id="notes"></div>
+  <div id="fireworks" class="fireworks"></div>
 
-  <div class="text-center">
-    <h1 class="text-4xl font-bold text-pink-600 mb-4">Uma Surpresa para Você, Meu Amor!</h1>
-    <p class="text-lg text-gray-700 mb-6">Você é a melhor parte dos meus dias. Clique nos botões para brincadeiras e surpresas!</p>
+  <!-- Seção Inicial -->
+  <div id="landingSection" class="fade-in">
+    <h1 class="text-5xl md:text-7xl font-bold text-ffccd5 mb-6" style="font-family: 'Great Vibes', cursive;">
+      De mim para Anninha! 🌷
+    </h1>
+    <div class="main-heart mb-6">❤️</div>
+    <div class="castle">🏰</div>
+    <p class="typewriter text-xl md:text-2xl text-gray-800 mb-8 max-w-2xl mx-auto" style="font-family: 'Georgia', serif;">
+      De Vitória/ES a Cajazeiras/PB, Pronta para a surpresa?
+    </p>
+    <button id="surpriseButton" class="button-glow text-white px-8 py-4 rounded-full text-lg font-semibold transition duration-300">
+      Descubra Meu Amor! 💖
+    </button>
   </div>
 
-  <!-- Galeria de Fotos -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-    <div class="photo-card bg-white p-4 rounded-lg shadow-lg">
-      <img src="https://via.placeholder.com/300x200?text=Nós+Dois" alt="Foto de vocês" class="w-full h-48 object-cover rounded">
-      <p class="text-center mt-2 text-gray-600">Nosso primeiro encontro!</p>
+  <!-- Seção Principal -->
+  <div id="mainSection" class="w-full max-w-4xl">
+    <button id="backToLanding" class="button-glow bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-300 mt-4">Voltar</button>
+    <div class="text-center mb-12">
+      <h1 class="text-5xl font-bold text-ffccd5 mb-4" style="font-family: 'Great Vibes', cursive;">Anninha, Meu Amor Eterno!</h1>
+      <p class="text-lg text-gray-700 max-w-2xl mx-auto" style="font-family: 'Georgia', serif;">
+        Você é minha tulipa rosa, minha Elizabeth, minha Sophie. Cada florzinha que trago é para te ver sorrir! 💖
+      </p>
     </div>
-    <div class="photo-card bg-white p-4 rounded-lg shadow-lg">
-      <img src="https://via.placeholder.com/300x200?text=Você+Linda" alt="Foto dela" class="w-full h-48 object-cover rounded">
-      <p class="text-center mt-2 text-gray-600">Você sorrindo é tudo!</p>
-    </div>
-    <div class="photo-card bg-white p-4 rounded-lg shadow-lg">
-      <img src="https://via.placeholder.com/300x200?text=Momento+Especial" alt="Foto de vocês" class="w-full h-48 object-cover rounded">
-      <p class="text-center mt-2 text-gray-600">Aquele dia inesquecível!</p>
-    </div>
-  </div>
 
-  <!-- Botão de Surpresa (mais mensagens adicionadas) -->
-  <button id="surpriseButton" class="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition duration-300 mb-8">Clique para uma Surpresa!</button>
-  <div id="surpriseMessage" class="hidden-message mt-6 text-lg text-gray-800 bg-white p-4 rounded-lg shadow-lg mb-8"></div>
-
-  <!-- Convite para Cineminha -->
-  <div class="text-center mb-8">
-    <h2 class="text-2xl font-bold text-pink-600 mb-4">Ei, amor! Quer fazer um cineminha em casa só nós dois, com pipoca, filme e abraços?</h2>
-    <div class="flex justify-center space-x-4">
-      <button id="yesButton" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300">Sim!</button>
-      <button id="noButton" class="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition duration-300">Não</button>
+    <!-- Navegação -->
+    <div class="flex flex-wrap gap-2 mb-4 justify-center">
+      <div class="tab active" data-tab="story">Nossa História</div>
+      <div class="tab" data-tab="memories">Nossas Memórias</div>
+      <div class="tab" data-tab="lugares">Nosso Lugares Incríveis</div>
+      <div class="tab" data-tab="piano">Pianinho da Anninha</div>
+      <div class="tab" data-tab="surprise">Mensagens do Coração</div>
+      <div class="tab" data-tab="quiz">Quiz do Nosso Amor</div>
+      <div class="tab" data-tab="roulette">Roleta Encantada</div>
+      <div class="tab" data-tab="compliments">Elogios para Anninha</div>
+      <div class="tab" data-tab="cinema">Convite Mágico</div>
+      <div class="tab" data-tab="letter">Carta para Anninha</div>
+      <div class="tab" data-tab="timeline">Nossa Linha do Tempo</div>
     </div>
-    <div id="inviteMessage" class="hidden-message mt-6 text-lg text-gray-800 bg-white p-4 rounded-lg shadow-lg"></div>
-  </div>
+
+    <!-- Nossa História -->
+    <div id="story" class="tab-content active">
+      <h2 class="text-3xl font-bold text-ffccd5 mb-4" style="font-family: 'Great Vibes', cursive;">Nossa História</h2>
+      <p class="text-lg text-gray-700 max-w-2xl mx-auto" style="font-family: 'Georgia', serif;">
+Oii, Anninha! 💖
+
+Tô fazendo isso tudo pensando em você, pra te fazer sorrir mais uma vez.. com o coração cheio de amor!!!! Não passa um dia sem que eu lembre de você, dos nossos momentos, de tudo que faz a gente ser tão especial. Fiz esse site pra te mostrar o quanto você significa pra mim, porque nossa história é o que me faz sorrir todo dia! na verdade VOCÊ quem me faz sorrir todos os dias. E eu sou totalmente grato por ter você na minha vida. Tudo começou no Discord em 2022, falando de Por Lugares Incríveis. E mesmo não se encontrando antes.. Ao vim para cá, soube que tinha sempre um momento certo para tudo! E esse dia chegou. Eu saí de Vitória/ES no dia 16/05/25 e cheguei em Cajazeiras/PB, onde moro atualmente, no dia 19/05/25, só pra estar com você.
+Dia 21/05/25, nosso primeiro jantar juntos foi guacamole, com batatinha e carne moída feito por nós dois, e eu gostei muito!!! Mesmo não ter provado antes. No dia 22/05/25, você fez um bolo de cenoura com calda de chocolate e granulados de estrelinhas coloridas pra mim, estava muito gostoso. No mesmo dia, fomos comer batata frita e ver um pôr do sol lindo no Leblon, tiramos fotos. Logo após, fomos tomar um milk shake na Doceria Andreia Paula, temos fotos juntos também.
+No dia 24/05, você pintou com aquarela a minha tatuagem da Ellie de The Last of Us, certamente você deve ser flemenguista kkkk, e depois fomos pro Cristo de Cajazeiras, o ponto turístico, ver o pôr do sol. Temos fotos, e uma delas é você de costas, com a cor laranjada refletindo nos seus cabelos, amo essa foto que tirei sua. Na mesma noite, tivemos nosso jantar à luz de velas, com um macarrão delicioso que você cozinhou, tomando um vinho. Deveriamos fazer novamente.
+Dia 27/05, almoçamos no Senhor dos Cafés, comemos uma parmegiana muito gostosa com macarrão. À noite, fomos pro Xamegão comer um espetinho, que é um dos melhores lugares que já comemos. Dia 29/05, no final da tarde, fomos dançar com os velhinhos no Leblon e ver o pôr do sol de novo, tiramos fotos de uma cachorrinha que chamamos de Jorgina, kkk.
+No dia 30/05, te levei pra tirar sangue pra doação, você estava com medo de desmaiar, então fui junto pra dirigir e cuidar de você. À noite, fomos no Matuto, comemos uma porção de filé de carne com batata, tomamos uns drinks e voltamos meio bêbados pra casa, rindo muito um com o outro. Dia 31/05 foi marcante, queimamos a camisa do seu ex, que te tratou muito mal. Não quero falar muito disso por causa dos seus gatilhos, mas foi o dia que você se libertou dessa "maldição". Temos um vídeo você gravando, e você gostou de fazer isso, kkk.
+Dia 01/06, fomos almoçar no Panela de Barro. Eu estava meio doente, mas você cuidou muito bem de mim. Você está se formando em medicina, falta um ano, e a gente sempre ri com a frase do seu pai: "faça apenas UMMMM ANO", kkk, repetimos tanto isso. Dia 04/06, fizemos skincare com argila, temos fotos com argila no rosto, e você tirou fotos de mim passando argila em você.
+Dia 06/06 foi especial, nossa primeira foto de wallpaper, eu beijando sua cabeça no Xamegão, com bandeirinhas de São João acima de nós, você amou essa foto. Dia 10/06, viajamos pro Vale dos Dinossauros, foi bem legal, temos fotos onde os dinossauros passaram e fotos juntos. Tentamos jantar no Mirante, mas estava fechado. Mesmo assim, te levei por um lugar perigoso pra não perder o pôr do sol, você tem medo de altura, mas eu segurei sua mão e disse que estava com você. Dava pra ver que você se sentia segura. No carro, voltando, você tirou uma foto linda do pôr do sol.
+Dia 15/06, você colocou Orgulho e Preconceito, seu filme favorito, pra eu assistir. Você estava bordando, e tirou foto minha grudado no notebook, prestando atenção em cada detalhe. Dia 24/06, roubamos uma gatinha de rua, queríamos adotar, mas ela era de alguém, então devolvemos. A Fefe, ficou com muito ciúme, kkk, temos fotos da dela no sofá.
+Dia 01/07 foi meu aniversário, você fez uma festa surpresa, com um bolo delicioso que encomendou, tenho fotos e vídeos, você fez tudo com tanto carinho. Fiquei muito feliz. Dia 07/07, fui pra uma entrevista de emprego com você, onde tudo começou. Estava procurando trabalho há dias, e conseguimos, graças a Deus, com seu apoio total.
+Dia 12/07, você fez um baião de dois, muito gostoso, eu nunca tinha comido e amei. À noite, assistimos Pocahontas, e a Fefe até olhou pra TV, rimos muito disso, tiramos fotos dela assistindo. Dia 13/07, fomos pro Boqueirão tomar banho, sua primeira vez num açude, não sei se você gostou muito, mas estava aproveitando. No caminho, parei o carro no meio da estrada pra pegar uma florzinha pra você, como sempre faço, e você guardou. Tiramos fotos de mim pegando e você recebendo. Chegando em casa, você foi replantar e adubar suas plantas, gravei você adubando o alecrim, tão linda, sorrindo. Perguntei se você não me amava mais, e você fez um coraçãozinho com as mãos no vídeo, sorrindo. Eu disse que você é o verdadeiro significado da minha felicidade.
+Ainda no dia 13/07, fomos tomar açaí, nosso ponto favorito, tirei foto, você estava linda, como sempre. Também tiramos fotos das nossas mãos com crucifixos na igreja, o que você me deu de presente de aniversário. De manhã, você fez panquecas de banana com mel, estava muito gostoso, tirei foto. Dia 15/07, você tirou foto de um coelho, e vi que você queria um. Planejei te dar um, e você vai ver como foi!
+Dia 18/07, provei seu bolo de banana, me apaixonei, agora peço sempre, kkk. À noite, te levei pra um rodízio de pizza na Mansão, rimos muito. Você deu coxinhas que não gostamos pros gatos do lugar, gravei isso. Também gravei você com o flash na cara, parecendo um saruê me olhando de lado, kkk, e quando você roubou minha pizza. Temos fotos lá, o lugar é bonito, mas a comida é ruim, kkk.
+Dia 19/07, fiz uma surpresa, comprei uma rosa vermelha. Gravei te dando uma florzinha pequena, e quando você foi guardar, tirei a rosa do bolso de trás. Sua reação foi mágica, aquele sorriso lindo, você ficou tão feliz, gravei isso. Dia 29/07, você estava triste, com febre, então te dei um coelho, Frederico Froid. Levei numa caixinha, gravei você abrindo, você chorou de emoção, ficou impressionada. Você ama ele, e agora ele mora com a gente na casinha que compramos.
+Dia 10/08, cantei na igreja com o grupo de jovens que você me apresentou. Usei suas roupas, fiquei parecendo o Howl, você me achou lindo, e não parava de me olhar, nem eu de olhar você, tão linda. Às 22:22, gravamos um vídeo dançando e nos beijando, tão lindo. Dia 14/08, às 08:49, terminei esse texto, lembrando cada momento do seu lado. A cada dia, você me ensina te amar mais, e eu sou muito feliz com você, de uma forma que nunca fui. Eu amo você o bastante, Anna Carolina.
+      </p>
+    </div>
+
+    <!-- Memórias -->
+    <div id="memories" class="tab-content">
+      <h2 class="text-3xl font-bold text-ffccd5 mb-4" style="font-family: 'Great Vibes', cursive;">Nossas Memórias</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="photo-card p-4 rounded-xl shadow-lg">
+          <video src="https://i.imgur.com/t8H19IQ.mp4" controls class="w-full h-48 object-cover rounded-lg"></video>
+          <p class="text-gray-600 font-semibold">Nossa dança, como Sophie e Howl, em 10/08/25! 🏰</p>
+        </div>
+        <div class="photo-card p-4 rounded-xl shadow-lg">
+          <img src="https://i.imgur.com/EpeOoRg.jpeg" alt="Pôr do sol no Leblon" class="w-full h-48 object-cover rounded-lg">
+          <p class="text-gray-600 font-semibold">Você de costas no pôr do sol do Leblon, 24/05/25! 🌅</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Por Lugares Incríveis -->
+    <div id="lugares" class="tab-content">
+      <h2 class="text-3xl font-bold text-ffccd5 mb-4" style="font-family: 'Great Vibes', cursive;">Nossos Lugares Incríveis</h2>
+      <p class="text-lg text-gray-700 mb-4" style="font-family: 'Georgia', serif;">Anninha, nosso amor é como Violet e Finch, cheio de lugares incríveis!</p>
+      <div class="grid grid-cols-1 gap-4">
+        <div class="bg-fff0f5 p-4 rounded-lg shadow">
+          <p class="text-gray-600">Discord, 2022: Onde falamos de *Por Lugares Incríveis*.</p>
+        </div>
+        <div class="bg-fff0f5 p-4 rounded-lg shadow">
+          <p class="text-gray-600">Cajazeiras/PB, 19/05/25: Cheguei para te encontrar!</p>
+        </div>
+        <div class="bg-fff0f5 p-4 rounded-lg shadow">
+          <p class="text-gray-600">Leblon, 22/05/25: Nosso primeiro pôr do sol juntos!</p>
+        </div>
+        <div class="bg-fff0f5 p-4 rounded-lg shadow">
+          <p class="text-gray-600">Xamegão, 06/06/25: Nosso wallpaper com bandeirinhas! 🎉</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pianinho -->
+    <div id="piano" class="tab-content">
+      <h2 class="text-3xl font-bold text-ffccd5 mb-4" style="font-family: 'Great Vibes', cursive;">Pianinho da Anninha</h2>
+      <p class="text-lg text-gray-700 mb-4" style="font-family: 'Georgia', serif;">Anninha, essas notas são para você, como no Discord! 🎹</p>
+      <div class="flex justify-center space-x-2">
+        <button class="piano-key bg-white text-black p-4 rounded shadow" data-note="URL_DO_NOTA_DO.mp3">Dó</button>
+        <button class="piano-key bg-white text-black p-4 rounded shadow" data-note="URL_DO_NOTA_RE.mp3">Ré</button>
+        <button class="piano-key bg-white text-black p-4 rounded shadow" data-note="URL_DO_NOTA_MI.mp3">Mi</button>
+      </div>
+    </div>
+
+    <!-- Mensagens do Coração -->
+    <div id="surprise" class="tab-content">
+      <h2 class="text-3xl font-bold text-ffccd5 mb-4" style="font-family: 'Great Vibes', cursive;">Mensagens do Coração</h2>
+      <button id="surpriseMessageButton" class="button-glow text-white px-6 py-3 rounded-lg">Tire uma Mensagem!</button>
+      <div id="surpriseMessage" class="hidden-message mt-6 text-lg text-gray-800 bg-fff0f5 p-4 rounded-lg shadow-lg max-w-md mx-auto" style="font-family: 'Georgia', serif;"></div>
+    </div>
+
+    <!-- Quiz -->
+    <div id="quiz" class="tab-content">
+      <h2 class="text-3xl font-bold text-ffccd5 mb-4" style="font-family: 'Great Vibes', cursive;">Quiz do Nosso Amor</h2>
+      <p id="quizScore" class="text-lg text-gray-700 mb-4" style="font-family: 'Georgia', serif;">Pontos: <span id="score">0</span>/5</p>
+      <p id="quizQuestion" class="text-lg text-gray-700 mb-4" style="font-family: 'Georgia', serif;">Pergunta: Qual foi nosso primeiro jantar juntos?</p>
+      <div class="flex flex-col space-y-2 max-w-md mx-auto">
+        <div class="quiz-option p-2 rounded shadow" data-answer="correct">Guacamole com batatinha</div>
+        <div class="quiz-option p-2 rounded shadow" data-answer="wrong">Pizza</div>
+        <div class="quiz-option p-2 rounded shadow" data-answer="wrong">Macarrão</div>
+      </div>
+      <div id="quizMessage" class="hidden-message mt-4 text-lg text-gray-800 bg-fff0f5 p-4 rounded-lg shadow-lg" style="font-family: 'Georgia', serif;"></div>
+      <button id="nextQuizButton" class="button-glow bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600" style="display: none;">Próxima Pergunta</button>
+    </div>
+
+    <!-- Roleta -->
+    <div id="roulette" class="tab-content">
+      <h2 class="text-3xl font-bold text-ffccd5 mb-4" style="font-family: 'Great Vibes', cursive;">Roleta Encantada</h2>
+      <div class="roulette mx-auto mb-4">
+        <div class="roulette-arrow"></div>
+      </div>
+      <button id="spinButton" class="button-glow bg-purple-500 text-white px-6 py-3 rounded-lg hover:bg-purple-600">Girar!</button>
+      <div id="rouletteMessage" class="hidden-message mt-6 text-lg text-gray-800 bg-fff0f5 p-4 rounded-lg shadow-lg" style="font-family: 'Georgia', serif;"></div>
+    </div>
+
+    <!-- Elogios -->
+    <div id="compliments" class="tab-content">
+      <h2 class="text-3xl font-bold text-ffccd5 mb-4" style="font-family: 'Great Vibes', cursive;">Elogios para Anninha</h2>
+      <button id="complimentButton" class="button-glow bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600">Gerar Elogio!</button>
+      <div id="complimentMessage" class="hidden-message mt-6 text-lg text-gray-800 bg-fff0f5 p-4 rounded-lg shadow-lg" style="font-family: 'Georgia', serif;"></div>
+    </div>
+
+    <!-- Convite -->
+    <div id="cinema" class="tab-content">
+      <h2 class="text-3xl font-bold text-ffccd5 mb-4" style="font-family: 'Great Vibes', cursive;">Convite Mágico</h2>
+      <p class="text-lg text-gray-700 mb-4" style="font-family: 'Georgia', serif;">Anninha, que tal um cineminha com Orgulho e Preconceito, O Castelo Animado, ou dançarmos como Sophie e Howl?</p>
+      <div class="flex justify-center space-x-4">
+        <button id="yesButton" class="button-glow bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600">Sim!</button>
+        <button id="noButton" class="button-glow bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600">Não</button>
+      </div>
+      <div id="inviteMessage" class="hidden-message mt-6 text-lg text-gray-800 bg-fff0f5 p-4 rounded-lg shadow-lg" style="font-family: 'Georgia', serif;"></div>
+    </div>
+
+    <!-- Carta -->
+    <div id="letter" class="tab-content">
+      <h2 class="text-3xl font-bold text-ffccd5 mb-4" style="font-family: 'Great Vibes', cursive;">Carta para Anninha</h2>
+      <div id="letterContent" class="hidden-message text-lg text-gray-800 bg-fff0f5 p-6 rounded-lg shadow-lg max-w-2xl mx-auto" style="font-family: 'Georgia', serif;">
+        <p>Oii amor!,</p>
+        <p class="mt-4">Passei algum tempo criando isso para você. Mas cada detalhe que deixei aqui, é para demonstrar o meu amor por você. E quero que seja sempre assim, mesmo nos pequenos detalhes, conseguir demonstrar cada amor por você! Eu espero de verdade que você goste, pois cada linha foi de coração e pensando em você. Eu te amo demais princesa!</p>
+        <p class="mt-4">Com todo meu amor,<br>[Mayck]</p>
+      </div>
+      <button id="revealLetter" class="button-glow text-white px-6 py-3 rounded-lg mt-4">Abrir a Carta</button>
+    </div>
+
+    <!-- Linha do Tempo -->
+    <div id="timeline" class="tab-content">
+      <h2 class="text-3xl font-bold text-ffccd5 mb-4" style="font-family: 'Great Vibes', cursive;">Nossa Linha do Tempo</h2>
+      <div class="relative max-w-2xl mx-auto">
+        <div class="absolute left-1/2 transform -translate-x-1/2 w-1 bg-ffccd5 h-full"></div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">22/04/2023</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Você: Meu coração está todinho em você!.</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <img src="https://i.imgur.com/l00s1On.jpeg" alt="Discord" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full flex-row-reverse">
+          <div class="w-1/2 text-left pl-4">
+            <p class="text-gray-600 font-semibold">16/05/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Saí de Vitória/ES para te encontrar!</p>
+          </div>
+          <div class="w-1/2 pr-4">
+            <img src="https://i.imgur.com/HCvlZUQ.jpeg" alt="Viagem" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">19/05/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Cheguei em Cajazeiras/PB!</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <img src="https://i.imgur.com/ifSfrUi.jpeg" alt="Cajazeiras" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full flex-row-reverse">
+          <div class="w-1/2 text-left pl-4">
+            <p class="text-gray-600 font-semibold">21/05/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Nosso primeiro jantar: guacamole com batatinha!</p>
+          </div>
+          <div class="w-1/2 pr-4">
+            <img src="https://i.imgur.com/nBaWLyb.jpeg" alt="Guacamole" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">22/05/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Seu bolo de cenoura com estrelinhas e pôr do sol no Leblon!</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <img src="https://i.imgur.com/CmlMIJe.jpeg" alt="Bolo de cenoura" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full flex-row-reverse">
+          <div class="w-1/2 text-left pl-4">
+            <p class="text-gray-600 font-semibold">22/05/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Milk shake na Doceria Andreia Paula!</p>
+          </div>
+          <div class="w-1/2 pr-4">
+            <img src="https://i.imgur.com/3FmCysK.jpeg" alt="Milk shake" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">24/05/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">O pôr do sol no Cristo!</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <img src="https://i.imgur.com/bfjTws0.jpeg" alt="Cristo de Cajazeiras" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full flex-row-reverse">
+          <div class="w-1/2 text-left pl-4">
+            <p class="text-gray-600 font-semibold">24/05/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Jantar à luz de velas com seu macarrão delicioso!</p>
+          </div>
+          <div class="w-1/2 pr-4">
+            <img src="https://i.imgur.com/WgXEdtO.jpeg" alt="Jantar à luz de velas" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">27/05/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Almoço no Senhor dos Cafés e espetinho no Xamegão!</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <img src="https://i.imgur.com/iFPX5oV.jpeg" alt="Xamegão" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full flex-row-reverse">
+          <div class="w-1/2 text-left pl-4">
+            <p class="text-gray-600 font-semibold">29/05/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">A cachorrinha Jorgina!</p>
+          </div>
+          <div class="w-1/2 pr-4">
+            <img src="https://i.imgur.com/0Z5gSkH.jpeg" alt="Jorgina" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">30/05/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Te acompanhei na doação de sangue e comemos no Matuto!</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <img src="https://i.imgur.com/M4kXXiu.jpeg" alt="Matuto" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full flex-row-reverse">
+          <div class="w-1/2 text-left pl-4">
+            <p class="text-gray-600 font-semibold">31/05/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Queimamos a camisa do ex, um momento de libertação!</p>
+          </div>
+          <div class="w-1/2 pr-4">
+            <img src="https://i.imgur.com/eScK7nx.jpeg" alt="Camisa" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">01/06/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Almoço no Panela de Barro, você cuidou de mim doente!</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <img src="https://i.imgur.com/yPc0pPH.jpeg" alt="Panela de Barro" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full flex-row-reverse">
+          <div class="w-1/2 text-left pl-4">
+            <p class="text-gray-600 font-semibold">04/06/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Skincare com argila, rimos muito!</p>
+          </div>
+          <div class="w-1/2 pr-4">
+            <img src="https://i.imgur.com/zbJpp1D.jpeg" alt="Skincare" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">06/06/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Nossa foto que virou wallpaper no Xamegão com bandeirinhas!</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <img src="https://i.imgur.com/jldo4Oq.jpeg" alt="Wallpaper" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full flex-row-reverse">
+          <div class="w-1/2 text-left pl-4">
+            <p class="text-gray-600 font-semibold">10/06/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Pegadas dos Dinossauros!</p>
+          </div>
+          <div class="w-1/2 pr-4">
+            <img src="https://i.imgur.com/wHwXhtI.jpeg" alt="Vale dos Dinossauros" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">15/06/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Assistimos Orgulho e Preconceito, você bordando!</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <img src="https://i.imgur.com/Vko2dER.jpeg" alt="Orgulho e Preconceito" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full flex-row-reverse">
+          <div class="w-1/2 text-left pl-4">
+            <p class="text-gray-600 font-semibold">24/06/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Tentamos adotar uma gatinha, mas Fefe ficou com ciúmes!</p>
+          </div>
+          <div class="w-1/2 pr-4">
+            <img src="https://i.imgur.com/u7AZG94.jpeg" alt="Gatinha" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">01/07/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Minha festa surpresa de aniversário!</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <img src="https://i.imgur.com/b6erkSg.jpeg" alt="Aniversário" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full flex-row-reverse">
+          <div class="w-1/2 text-left pl-4">
+            <p class="text-gray-600 font-semibold">07/07/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Entrevista de emprego com seu apoio!</p>
+          </div>
+          <div class="w-1/2 pr-4">
+            <img src="https://i.imgur.com/wi3FRFb.jpeg" alt="Entrevista" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">12/07/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Seu baião de dois que estava uma delícía</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <img src="https://i.imgur.com/Y759ooZ.jpeg" alt="Fefe" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full flex-row-reverse">
+          <div class="w-1/2 text-left pl-4">
+            <p class="text-gray-600 font-semibold">13/07/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Você adubando o alecrim!</p>
+          </div>
+          <div class="w-1/2 pr-4">
+            <video src="https://i.imgur.com/U8qJO9F.mp4" controls class="w-32 h-32 object-cover rounded-full shadow-lg"></video>
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">13/07/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Açaí e panquecas de banana com mel!</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <img src="https://i.imgur.com/VXUQiOz.jpeg" alt="Açaí" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full flex-row-reverse">
+          <div class="w-1/2 text-left pl-4">
+            <p class="text-gray-600 font-semibold">13/07/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Nossas mãos com crucifixos na igreja!</p>
+          </div>
+          <div class="w-1/2 pr-4">
+            <img src="https://i.imgur.com/SEO1bwv.jpeg" alt="Crucifixos" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">18/07/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Seu bolo de banana</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <img src="https://i.imgur.com/kYELm4C.jpeg" alt="Bolo de banana" class="w-32 h-32 object-cover rounded-full shadow-lg">
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full flex-row-reverse">
+          <div class="w-1/2 text-left pl-4">
+            <p class="text-gray-600 font-semibold">19/07/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Surpresa para você com a rosa vermelha!</p>
+          </div>
+          <div class="w-1/2 pr-4">
+            <video src="https://i.imgur.com/zVHzm46.mp4" controls class="w-32 h-32 object-cover rounded-full shadow-lg"></video>
+          </div>
+        </div>
+        <div class="mb-8 flex items-center w-full">
+          <div class="w-1/2 text-right pr-4">
+            <p class="text-gray-600 font-semibold">29/07/25</p>
+            <p class="text-lg text-gray-700" style="font-family: 'Georgia', serif;">Dia da chegada do Frederico Froid, nosso coelho!</p>
+          </div>
+          <div class="w-1/2 pl-4">
+            <video src="https://i.imgur.com/Hbzg0Aw.mp4" controls class="w-32 h-32 object-cover rounded-full shadow-lg"></video>
+          </div>
+        </div>
+      </div>
+    </div>
 
   <script>
-    // Mensagens expandidas com mais brincadeiras
-    const messages = [
-      "Você é meu sol em dias nublados! ☀️",
-      "Te amo mais do que macarrão (e olha que eu amo macarrão em kkk)! 🍝",
-      "Cada momento com você é como um sonho. 💕",
-      "Você já pensou em ser modelo? Porque você é perfeita! 😍",
-      "Prometo te fazer sorrir todos os dias! 😊",
-      "Lembra quando a gente dançou na chuva? Vamos repetir! 🌧️",
-      "Você é minha jogadora favorita no jogo da vida! 🎮",
-      "Se você fosse um super-herói, seria a 'Super Fofa'! 🦸‍♀️",
-      "Te amo do tamanho do universo (e crescendo)! 🌌",
-      "Vamos planejar nossa próxima aventura? ✈️"
-    ];
+    // Tulipas caindo
+    function createTulip() {
+      const tulip = document.createElement('div');
+      tulip.classList.add('tulip');
+      tulip.textContent = '🌷';
+      tulip.style.left = `${Math.random() * 100}vw`;
+      tulip.style.animationDuration = `${Math.random() * 7 + 7}s`;
+      document.getElementById('tulips').appendChild(tulip);
+      setTimeout(() => tulip.remove(), 12000);
+    }
+    setInterval(createTulip, 300);
 
+    // Notas musicais
+    function createNote() {
+      const note = document.createElement('div');
+      note.classList.add('note');
+      note.textContent = '♪';
+      note.style.left = `${Math.random() * 100}vw`;
+      note.style.top = `${Math.random() * 100}vh`;
+      document.getElementById('notes').appendChild(note);
+      setTimeout(() => note.remove(), 5000);
+    }
+
+    // Música
+    const music = document.getElementById('backgroundMusic');
+    const musicToggle = document.getElementById('musicToggle');
     const surpriseButton = document.getElementById('surpriseButton');
-    const surpriseMessage = document.getElementById('surpriseMessage');
+    
+    // Definir volume inicial (80%)
+    music.volume = 0.8;
 
+    // Função para alternar música
+    musicToggle.addEventListener('click', () => {
+      if (music.paused) {
+        music.play().catch(error => {
+          console.error('Erro ao tentar tocar a música:', error);
+        });
+        musicToggle.textContent = 'Pausar Música';
+        for (let i = 0; i < 5; i++) setTimeout(createNote, i * 100);
+      } else {
+        music.pause();
+        musicToggle.textContent = 'Tocar Música';
+      }
+    });
+
+    // Iniciar música ao clicar no botão de surpresa (contorna restrição de autoplay)
     surpriseButton.addEventListener('click', () => {
-      const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-      surpriseMessage.textContent = randomMessage;
+      if (music.paused) {
+        music.play().catch(error => {
+          console.error('Erro ao tentar tocar a música:', error);
+        });
+        musicToggle.textContent = 'Pausar Música';
+        for (let i = 0; i < 5; i++) setTimeout(createNote, i * 100);
+      }
+    });
+
+    // Transição
+    const landingSection = document.getElementById('landingSection');
+    const mainSection = document.getElementById('mainSection');
+    surpriseButton.addEventListener('click', () => {
+      landingSection.classList.add('hidden');
+      mainSection.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.getElementById('backToLanding').addEventListener('click', () => {
+      mainSection.classList.remove('active');
+      landingSection.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Abas
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Pianinho
+    document.querySelectorAll('.piano-key').forEach(key => {
+      key.addEventListener('click', () => {
+        const audio = new Audio(key.dataset.note);
+        audio.play();
+        for (let i = 0; i < 3; i++) setTimeout(createNote, i * 100);
+      });
+    });
+
+    // Mensagens
+    const messages = [
+      "Anninha, seu bolo de banana é tão gostoso quanto nosso amor! 🍌",
+      "Cada Florzinha que trago é pra te ver sorrir! 🌷",
+      "Lembra do pôr do sol no Leblon? Você estava linda! 🌅",
+      "Você deve saber, com certeza deve saber, que tudo isso é por você. – Mr. Darcy",
+      "Meu coração voa por você, como o castelo de Howl! 🏰",
+      "Nossa dança às 22:22 em 10/08/25 foi mágica! 💃",
+      "Frederico Froid é nosso bebê, como você! 🐰",
+      "Seu macarrão à luz de velas em 24/05/25 foi perfeito! 🍝",
+      "UMMMM ANO! Rimos tanto com isso! 😜",
+      "Você adubando o alecrim é meu vídeo favorito! 🌿"
+    ];
+    const surpriseMessageButton = document.getElementById('surpriseMessageButton');
+    const surpriseMessage = document.getElementById('surpriseMessage');
+    surpriseMessageButton.addEventListener('click', () => {
+      surpriseMessage.textContent = messages[Math.floor(Math.random() * messages.length)];
       surpriseMessage.classList.add('show');
     });
 
-    // Convite para cineminha
+    // Quiz
+    const quizQuestions = [
+      { 
+        question: "Qual foi nosso primeiro jantar juntos?", 
+        options: ["Guacamole com batatinha", "Pizza", "Macarrão"], 
+        correct: 0, 
+        response: "Acertou, Anninha! Nosso guacamole em 21/05/25 foi incrível! 🥑" 
+      },
+      { 
+        question: "O que conectou nossos corações no Discord?", 
+        options: ["Por Lugares Incríveis", "Orgulho e Preconceito", "O Castelo Animado"], 
+        correct: 0, 
+        response: "Sim! *Por Lugares Incríveis* é nossa história! 📖" 
+      },
+      { 
+        question: "O que trago pra você todo dia após o trabalho?", 
+        options: ["Florzinha", "Chocolate", "Um beijo"], 
+        correct: 0, 
+        response: "Isso, Anninha! Uma Florzinha rosa pra você! 🌷" 
+      },
+      { 
+        question: "Qual bolo seu eu amo?", 
+        options: ["Bolo de banana", "Bolo de cenoura", "Bolo de chocolate"], 
+        correct: 0, 
+        response: "Seu bolo de banana é perfeito, amor! 🍌" 
+      },
+      { 
+        question: "O que lembra nossa dança em 10/08/25?", 
+        options: ["Sophie e Howl", "Darcy e Elizabeth", "Violet e Finch"], 
+        correct: 0, 
+        response: "Nossa dança é mágica como *O Castelo Animado*! 🏰" 
+      }
+    ];
+    let currentQuiz = 0;
+    let score = 0;
+    const quizQuestion = document.getElementById('quizQuestion');
+    const quizOptions = document.querySelectorAll('.quiz-option');
+    const quizMessage = document.getElementById('quizMessage');
+    const nextQuizButton = document.getElementById('nextQuizButton');
+    const quizScore = document.getElementById('score');
+    function loadQuiz() {
+      quizQuestion.textContent = `Pergunta: ${quizQuestions[currentQuiz].question}`;
+      quizOptions.forEach((option, index) => {
+        option.textContent = quizQuestions[currentQuiz].options[index];
+        option.dataset.answer = index === quizQuestions[currentQuiz].correct ? 'correct' : 'wrong';
+        option.classList.remove('bg-green-100', 'bg-red-100');
+      });
+      quizMessage.classList.remove('show');
+      nextQuizButton.style.display = 'none';
+    }
+    quizOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        quizOptions.forEach(opt => opt.classList.remove('bg-green-100', 'bg-red-100'));
+        if (option.dataset.answer === 'correct') {
+          option.classList.add('bg-green-100');
+          quizMessage.textContent = quizQuestions[currentQuiz].response;
+          score++;
+          quizScore.textContent = score;
+        } else {
+          option.classList.add('bg-red-100');
+          quizMessage.textContent = `Errado, mas te amo mesmo assim, Anninha! A resposta certa é "${quizQuestions[currentQuiz].options[quizQuestions[currentQuiz].correct]}". 😜`;
+        }
+        quizMessage.classList.add('show');
+        if (currentQuiz < quizQuestions.length - 1) {
+          nextQuizButton.style.display = 'block';
+        } else {
+          nextQuizButton.textContent = `Fim! Você fez ${score}/5 pontos. Te amo, Anninha! 💖`;
+        }
+      });
+    });
+    nextQuizButton.addEventListener('click', () => {
+      currentQuiz++;
+      loadQuiz();
+    });
+    loadQuiz();
+
+    // Roleta
+    const prizes = [
+      "Um pianinho só pra você, Anninha! 🎹",
+      "Uma dança como Sophie e Howl! 🏰",
+      "Um cineminha com Orgulho e Preconceito! 💃",
+      "Um dia lendo Por Lugares Incríveis! 📖",
+      "Um bolo de banana feito por você! 🍌",
+      "Um jardim de tulipas rosas! 🌷",
+      "Um almoço com seu baião de dois! 🍽️",
+      "Um pôr do sol no Leblon! 🌅"
+    ];
+    const spinButton = document.getElementById('spinButton');
+    const roulette = document.querySelector('.roulette');
+    const rouletteMessage = document.getElementById('rouletteMessage');
+    spinButton.addEventListener('click', () => {
+      roulette.classList.remove('stop');
+      spinButton.disabled = true;
+      rouletteMessage.classList.remove('show');
+      setTimeout(() => {
+        roulette.classList.add('stop');
+        const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
+        rouletteMessage.innerHTML = `<span class="animate-bounce inline-block">Você ganhou: ${randomPrize}</span>`;
+        rouletteMessage.classList.add('show');
+        spinButton.disabled = false;
+        document.getElementById('fireworks').style.display = 'block';
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            const firework = document.createElement('div');
+            firework.classList.add('firework');
+            firework.style.left = `${Math.random() * window.innerWidth}px`;
+            firework.style.top = `${Math.random() * window.innerHeight}px`;
+            firework.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            document.getElementById('fireworks').appendChild(firework);
+            setTimeout(() => firework.remove(), 1200);
+          }, i * 50);
+        }
+        setTimeout(() => document.getElementById('fireworks').style.display = 'none', 1500);
+      }, 3000);
+    });
+
+    // Elogios
+    const compliments = [
+      "Anninha, seu sorriso no pôr do sol do Leblon é mais lindo que as tulipas rosas! 🌷",
+      "Seu bolo de banana é tão gostoso quanto nosso amor! 🍌",
+      "Você ilumina meu mundo, como Sophie no castelo de Howl! 🏰",
+      "Suas roseiras e amor-perfeito são tão belas quanto você! 🌹",
+      "Você cozinha com tanto amor que cada prato é mágico! 🍽️",
+      "Você é meu Por Lugares Incríveis, Anninha! 📖",
+      "Te amo por cada pianinho que toquei pra você! 🎹",
+      "Você adubando o alecrim é minha visão favorita! 🌿"
+    ];
+    const complimentButton = document.getElementById('complimentButton');
+    const complimentMessage = document.getElementById('complimentMessage');
+    complimentButton.addEventListener('click', () => {
+      complimentMessage.textContent = compliments[Math.floor(Math.random() * compliments.length)];
+      complimentMessage.classList.add('show');
+    });
+
+    // Convite
     const yesButton = document.getElementById('yesButton');
     const noButton = document.getElementById('noButton');
     const inviteMessage = document.getElementById('inviteMessage');
-
     yesButton.addEventListener('click', () => {
-      inviteMessage.textContent = 'Eba! Vamos preparar a pipoca e escolher o filme. Te amo! ❤️❤️❤️';
+      inviteMessage.textContent = 'Eba, Anninha! Vamos curtir Orgulho e Preconceito, O Castelo Animado ou dançar como Sophie e Howl! Te amo! ❤️';
       inviteMessage.classList.add('show');
-      noButton.style.display = 'none'; // Esconde o Não após aceitar
-      // Opcional: Tocar um som de vitória (hospede um MP3 e descomente)
-      // new Audio('URL_DO_SOM.mp3').play();
+      noButton.style.display = 'none';
+      document.getElementById('fireworks').style.display = 'block';
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const firework = document.createElement('div');
+          firework.classList.add('firework');
+          firework.style.left = `${Math.random() * window.innerWidth}px`;
+          firework.style.top = `${Math.random() * window.innerHeight}px`;
+          firework.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+          document.getElementById('fireworks').appendChild(firework);
+          setTimeout(() => firework.remove(), 1200);
+        }, i * 50);
+      }
+      setTimeout(() => document.getElementById('fireworks').style.display = 'none', 3000);
     });
-
-    // Fazer o Não fugir ao hover
     noButton.addEventListener('mouseover', () => {
       noButton.style.position = 'absolute';
-      const randomX = Math.random() * (window.innerWidth - 200); // Aleatório na tela
+      const randomX = Math.random() * (window.innerWidth - 200);
       const randomY = Math.random() * (window.innerHeight - 100);
       noButton.style.left = `${randomX}px`;
       noButton.style.top = `${randomY}px`;
     });
 
-    // Corações flutuantes
-    function createHeart() {
+    // Carta
+    document.getElementById('revealLetter').addEventListener('click', () => {
+      const letterContent = document.getElementById('letterContent');
+      letterContent.classList.add('show');
+      document.getElementById('revealLetter').style.display = 'none';
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          const tulip = document.createElement('div');
+          tulip.classList.add('tulip');
+          tulip.textContent = '🌷';
+          tulip.style.left = `${Math.random() * 100}vw`;
+          document.getElementById('tulips').appendChild(tulip);
+          setTimeout(() => tulip.remove(), 5000);
+        }, i * 100);
+      }
+    });
+
+    // Corações interativos
+    document.body.addEventListener('click', (e) => {
       const heart = document.createElement('div');
-      heart.classList.add('heart');
+      heart.classList.add('tulip');
       heart.textContent = '❤️';
-      heart.style.left = `${Math.random() * 100}vw`;
-      heart.style.animationDuration = `${Math.random() * 3 + 5}s`; // Velocidade variada
-      document.getElementById('hearts').appendChild(heart);
-      setTimeout(() => heart.remove(), 6000); // Remove após animação
-    }
-    setInterval(createHeart, 500); // Cria corações a cada 0.5s
+      heart.style.left = `${e.clientX}px`;
+      heart.style.top = `${e.clientY}px`;
+      document.getElementById('tulips').appendChild(heart);
+      setTimeout(() => heart.remove(), 3000);
+    });
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('.fade-in').style.opacity = 1;
+    });
   </script>
 </body>
-
 </html>
